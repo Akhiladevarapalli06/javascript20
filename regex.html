@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation with Regex</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Registration Form</h2>
+    <form id="registrationForm">
+        <label for="name">Name (Only alphabets, min 3 characters):</label>
+        <input type="text" id="name" placeholder="Enter your name" required>
+        <div class="error" id="nameError"></div>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <div class="error" id="emailError"></div>
+
+        <label for="phone">Phone (10 digits):</label>
+        <input type="text" id="phone" placeholder="Enter your phone number" required>
+        <div class="error" id="phoneError"></div>
+
+        <label for="password">Password (Min 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special character):</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+        <div class="error" id="passwordError"></div>
+
+        <button type="button" onclick="validateForm()">Submit</button>
+    </form>
+
+    <script>
+        function validateForm() {
+            
+            let name = document.getElementById('name').value.trim();
+            let email = document.getElementById('email').value.trim();
+            let phone = document.getElementById('phone').value.trim();
+            let password = document.getElementById('password').value.trim();
+
+            
+            let nameError = document.getElementById('nameError');
+            let emailError = document.getElementById('emailError');
+            let phoneError = document.getElementById('phoneError');
+            let passwordError = document.getElementById('passwordError');
+
+            
+            nameError.textContent = '';
+            emailError.textContent = '';
+            phoneError.textContent = '';
+            passwordError.textContent = '';
+
+        
+            let nameRegex = /^[A-Za-z]{3,}$/;
+            let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            let phoneRegex = /^\d{10}$/;
+            let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+            let isValid = true;
+
+        
+            if (!nameRegex.test(name)) {
+                nameError.textContent = 'Invalid name. Must be at least 3 alphabetic characters.';
+                isValid = false;
+            }
+
+        
+            if (!emailRegex.test(email)) {
+                emailError.textContent = 'Invalid email format.';
+                isValid = false;
+            }
+
+
+            if (!phoneRegex.test(phone)) {
+                phoneError.textContent = 'Phone number must be 10 digits.';
+                isValid = false;
+            }
+
+            if (!passwordRegex.test(password)) {
+                passwordError.textContent = 'Password must be at least 8 characters, include an uppercase letter, a lowercase letter, a number, and a special character.';
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert('Form submitted successfully!');
+            }
+        }
+    </script>
+</body>
+</html>
